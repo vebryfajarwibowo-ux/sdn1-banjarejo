@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelulusan SDN 1 Banjarejo</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at top,#1e40af 0%,#020617 58%,#000 100%);color:white;display:flex;justify-content:center;align-items:center;padding:16px;overflow-x:hidden}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{width:100%;max-width:920px;position:relative;z-index:2;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:32px;padding:28px;text-align:center;backdrop-filter:blur(16px);box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.logo{width:145px;max-width:45vw;filter:drop-shadow(0 0 25px rgba(251,191,36,.65));animation:floatLogo 4s ease-in-out infinite}
+@keyframes floatLogo{50%{transform:translateY(-10px) scale(1.04)}}
+h1{font-size:40px;margin:12px 0 6px}.sub{color:#fde68a;font-size:20px;margin-bottom:22px}.inputRow{display:flex;gap:10px}
+input{flex:1;padding:17px;border-radius:16px;border:none;font-size:18px;text-align:center;outline:none}
+button{padding:17px 24px;border:none;border-radius:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);font-weight:900;font-size:17px;cursor:pointer;box-shadow:0 12px 35px rgba(251,191,36,.38)}
+button:hover{transform:translateY(-2px)}
+#loading,#sceneBox,#certificate{display:none}#loading{margin-top:24px}.bar{height:12px;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden;margin-top:10px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#fbbf24,#fff7ad)}
+#sceneBox{margin-top:24px}#threeBox{width:100%;height:360px;border-radius:24px;overflow:hidden;background:radial-gradient(circle at center,rgba(255,255,255,.13),rgba(0,0,0,.25));box-shadow:inset 0 0 50px rgba(255,255,255,.08);cursor:pointer}.hint{margin:12px 0;color:#fde68a;font-weight:bold}
+#certificate{margin-top:24px;background:#fffef7;color:#111827;border-radius:28px;padding:32px;box-shadow:0 25px 70px rgba(0,0,0,.5);animation:zoom .8s ease}
+@keyframes zoom{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+.certLogo{width:82px}.judul{font-weight:900;color:#1e3a8a;font-size:24px;margin-top:10px}
+.photoFrame{width:150px;height:190px;margin:18px auto 8px;border-radius:18px;padding:6px;background:linear-gradient(135deg,#fbbf24,#2563eb);box-shadow:0 14px 32px rgba(0,0,0,.25)}
+.photoFrame img{width:100%;height:100%;object-fit:cover;border-radius:14px;background:white}
+#typing{min-height:28px;color:#334155;font-weight:700;margin-top:15px}.nama{font-size:34px;font-weight:900;margin:14px 0}
+.lulus{font-size:84px;font-weight:1000;color:#fbbf24;text-shadow:0 0 12px #fbbf24,0 0 35px rgba(251,191,36,.75);animation:pulse 1.3s infinite}@keyframes pulse{50%{transform:scale(1.04)}}
+.pesan{line-height:1.7;font-size:17px}.ttd{text-align:right;margin-top:40px;font-size:16px}.cetak{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;margin-top:24px;width:100%}
+.confetti{position:fixed;top:-20px;width:10px;height:10px;z-index:99;animation:fall linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media(max-width:700px){.inputRow{display:block}h1{font-size:28px}.sub{font-size:16px}#threeBox{height:300px}.lulus{font-size:54px}.nama{font-size:24px}.photoFrame{width:125px;height:160px}.wrap{padding:20px}button{width:100%;margin-top:10px}}
+@media print{body{background:white;display:block;padding:0}#stars,.logo,h1,.sub,.inputRow,#loading,#sceneBox,.cetak{display:none!important}.wrap{box-shadow:none;background:white;color:black;max-width:100%;padding:0;border:0}#certificate{display:block!important;box-shadow:none;margin:0;border-radius:0}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <img src="logo.png" class="logo" alt="Logo SDN 1 Banjarejo">
+  <h1>SDN 1 BANJAREJO</h1>
+  <div class="sub">Pengumuman Kelulusan Tahun Pelajaran 2025/2026</div>
+  <div class="inputRow">
+    <input id="nama" placeholder="Masukkan Nama Siswa">
+    <button onclick="cek()">LIHAT PENGUMUMAN</button>
+  </div>
+  <div id="loading"><b>Memverifikasi data siswa...</b><div class="bar"><span id="bar"></span></div></div>
+  <div id="sceneBox"><div class="hint">Klik amplop 3D untuk membuka surat kelulusan</div><div id="threeBox"></div></div>
+  <div id="certificate">
+    <img src="logo.png" class="certLogo" alt="Logo">
+    <div class="judul">SURAT KETERANGAN KELULUSAN</div>
+    <div id="typing"></div>
+    <div class="photoFrame"><img id="fotoSiswa" alt="Foto Siswa" loading="lazy"></div>
+    <div class="nama" id="namaSiswa"></div>
+    <div class="lulus">LULUS</div>
+    <div class="pesan">Dari SDN 1 Banjarejo<br>Tahun Pelajaran 2025/2026<br><br>Selamat atas keberhasilan Anda.<br>Teruslah belajar, berkarya, dan raih cita-cita setinggi-tingginya.</div>
+    <div class="ttd">Gabus, 2 Juni 2026<br>Kepala Sekolah<br><br><br><b>Suyatmi, S.Pd</b><br>NIP. 197108272000032002</div>
+    <button class="cetak" onclick="window.print()">CETAK / SIMPAN SERTIFIKAT</button>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+const siswa = {
+"AHMAD CHOIRULBALYA":"ahmad-choirulbalya.webp",
+"AHMAD MUZAKI":"ahmad-muzaki.webp",
+"AHMAD RIF'AN RASYID":"ahmad-rifan-rasyid.webp",
+"ALBY LUTHFY FACHRY":"alby-luthfy-fachry.webp",
+"DESTHANIA MIKAILA IKHSANDRA":"desthania-mikaila-ikhsandra.webp",
+"DHESYA OKTA BIDARI":"dhesya-okta-bidari.webp",
+"FAIREL ATHARIZZ CALIEF FAWWAZI":"fairel-atharizz-calief-fawwazi.webp",
+"ILHAM ARKHAN MAULANA":"ilham-arkhan-maulana.webp",
+"JUWITA NUR FITRIYAH":"juwita-nur-fitriyah.webp",
+"LAILATUL BADRIYAH":"lailatul-badriyah.webp",
+"MUHAMMAD ANIS RIFAN":"muhammad-anis-rifan.webp",
+"NAILA NUR ROHMAH":"naila-nur-rohmah.webp",
+"NIKEN ALIFIA GUNAWAN":"niken-alifia-gunawan.webp",
+"RAZZA SYAHIID VICKY APRILIO":"razza-syahiid-vicky-aprilio.webp",
+"SEKAR ARUM DEWI FORTUNA":"sekar-arum-dewi-fortuna.webp",
+"YASMIN JIHAN RAMADHANI":"yasmin-jihan-ramadhani.webp",
+"ZUMROTUL AL MUFIDA":"zumrotul-al-mufida.webp"
+};
+let namaAktif="",fotoAktif="",opened=false,renderer,scene,camera,envelope,flap,letter;
+function cek(){const nama=document.getElementById("nama").value.toUpperCase().trim();if(nama===""){alert("Masukkan nama siswa");return}if(!siswa[nama]){alert("Nama tidak ditemukan");return}namaAktif=nama;fotoAktif=siswa[nama];opened=false;document.getElementById("certificate").style.display="none";document.getElementById("sceneBox").style.display="none";document.getElementById("loading").style.display="block";const bar=document.getElementById("bar");bar.style.transition="none";bar.style.width="0";setTimeout(()=>{bar.style.transition="2.2s";bar.style.width="100%"},40);setTimeout(()=>{document.getElementById("loading").style.display="none";document.getElementById("sceneBox").style.display="block";init3D()},2400)}
+function init3D(){const box=document.getElementById("threeBox");box.innerHTML="";scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(45,box.clientWidth/box.clientHeight,.1,100);camera.position.set(0,1.2,6);renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setSize(box.clientWidth,box.clientHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));box.appendChild(renderer.domElement);scene.add(new THREE.AmbientLight(0xffffff,1.15));const dir=new THREE.DirectionalLight(0xfff2c6,2.2);dir.position.set(3,5,5);scene.add(dir);const side=new THREE.PointLight(0x60a5fa,1.6,10);side.position.set(-4,2,3);scene.add(side);envelope=new THREE.Group();scene.add(envelope);const gold=new THREE.MeshStandardMaterial({color:0xf2b705,roughness:.34,metalness:.18});const darkGold=new THREE.MeshStandardMaterial({color:0xd97706,roughness:.42,metalness:.12});const paperMat=new THREE.MeshStandardMaterial({color:0xfffef7,roughness:.75,metalness:0});const back=new THREE.Mesh(new THREE.BoxGeometry(3.4,2.05,.12),gold);back.position.z=-.08;envelope.add(back);const front=new THREE.Mesh(new THREE.BoxGeometry(3.4,1.1,.16),darkGold);front.position.set(0,-.48,.16);envelope.add(front);const foldGeo=new THREE.ConeGeometry(1.22,1.58,3);const leftFold=new THREE.Mesh(foldGeo,gold);leftFold.scale.set(1,.55,.06);leftFold.rotation.z=Math.PI/2.25;leftFold.position.set(-.72,-.45,.28);envelope.add(leftFold);const rightFold=leftFold.clone();rightFold.rotation.z=-Math.PI/2.25;rightFold.position.x=.72;envelope.add(rightFold);flap=new THREE.Mesh(new THREE.ConeGeometry(1.95,1.72,3),gold);flap.scale.set(1,.66,.08);flap.rotation.z=Math.PI;flap.position.set(0,.85,.22);envelope.add(flap);letter=new THREE.Mesh(new THREE.BoxGeometry(2.75,1.55,.05),paperMat);letter.position.set(0,-.05,-.02);envelope.add(letter);envelope.rotation.x=-0.12;envelope.rotation.y=0.15;box.onclick=open3DEnvelope;animate3D()}
+function animate3D(){requestAnimationFrame(animate3D);if(renderer&&scene&&camera){if(envelope&&!opened){envelope.rotation.y=Math.sin(Date.now()*0.001)*0.18;envelope.position.y=Math.sin(Date.now()*0.002)*0.08}renderer.render(scene,camera)}}
+function open3DEnvelope(){if(opened)return;opened=true;let start=Date.now();function step(){let t=Math.min((Date.now()-start)/1600,1);let ease=1-Math.pow(1-t,3);flap.rotation.x=-Math.PI*0.88*ease;letter.position.y=-0.05+2.15*ease;letter.position.z=-0.02+.85*ease;letter.scale.set(1+0.22*ease,1+0.22*ease,1);envelope.rotation.y=0.15*(1-ease);envelope.position.y=.1*ease;if(t<1)requestAnimationFrame(step);else showCertificate()}step()}
+function showCertificate(){setTimeout(()=>{document.getElementById("fotoSiswa").src=fotoAktif;document.getElementById("namaSiswa").innerHTML=namaAktif;document.getElementById("certificate").style.display="block";document.getElementById("typing").innerHTML="";ketik("Dengan bangga diumumkan bahwa:",0);konfeti()},300)}
+function ketik(teks,i){if(i<teks.length){document.getElementById("typing").innerHTML+=teks.charAt(i);setTimeout(()=>ketik(teks,i+1),45)}}
+function konfeti(){for(let i=0;i<140;i++){let c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background=["#fbbf24","#fff","#60a5fa","#22c55e","#f472b6"][Math.floor(Math.random()*5)];c.style.animationDuration=(Math.random()*3+2)+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),5400)}}
+const bg=document.getElementById("stars"),ctx=bg.getContext("2d");let stars=[];function resizeBg(){bg.width=innerWidth;bg.height=innerHeight;stars=[...Array(120)].map(()=>({x:Math.random()*bg.width,y:Math.random()*bg.height,r:Math.random()*2+.4,s:Math.random()*.45+.18}))}resizeBg();addEventListener("resize",resizeBg);function drawBg(){ctx.clearRect(0,0,bg.width,bg.height);ctx.fillStyle="rgba(255,255,255,.82)";stars.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y-=p.s;if(p.y<0)p.y=bg.height});requestAnimationFrame(drawBg)}drawBg();
+</script>
+</body>
+</html>
