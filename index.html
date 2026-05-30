@@ -120,26 +120,20 @@ NIP. 197108272000032002
 </div>
 
 <script>
-
-<script>
-const siswa = [
-"AHMAD MUZAKI",
-"JUWITA NUR FITRIYAH",
-"YASMIN JIHAN RAMADHANI"
-];
-
 function cek(){
-  let nama = document.getElementById("nama").value.toUpperCase().trim();
 
-  if(!siswa.includes(nama)){
-    alert("Nama tidak ditemukan");
-    return;
-  }
+let nama = document.getElementById("nama").value.trim();
 
-  document.getElementById("namaSiswa").innerHTML = nama;
-  document.getElementById("hasil").style.display = "block";
+if(nama === ""){
+alert("Masukkan nama siswa");
+return;
 }
 
+document.getElementById("namaSiswa").innerHTML = nama.toUpperCase();
+
+document.getElementById("hasil").style.display = "block";
+
+}
 </script>
 
 </body>
