@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelulusan SDN 1 Banjarejo</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.card{
+width:90%;
+max-width:700px;
+background:rgba(255,255,255,.08);
+padding:30px;
+border-radius:25px;
+text-align:center;
+backdrop-filter:blur(10px);
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+margin-top:15px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+margin-top:15px;
+background:#fbbf24;
+font-weight:bold;
+cursor:pointer;
+}
+
+#hasil{
+display:none;
+margin-top:25px;
+background:white;
+color:black;
+padding:20px;
+border-radius:20px;
+}
+
+.lulus{
+font-size:60px;
+font-weight:900;
+color:#fbbf24;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>SDN 1 BANJAREJO</h1>
+
+<p>Pengumuman Kelulusan 2025/2026</p>
+
+<input id="nama" placeholder="Masukkan Nama Siswa">
+
+<button onclick="cek()">Lihat Pengumuman</button>
+
+<div id="hasil">
+
+<h2 id="namaSiswa"></h2>
+
+<div class="lulus">
+LULUS
+</div>
+
+<br>
+
+<p>Kepala Sekolah</p>
+
+<br><br>
+
+<b>Suyatmi, S.Pd</b>
+
+<br>
+
+NIP. 197108272000032002
+
+</div>
+
+</div>
+
+<script>
+
+function cek(){
+
+let nama =
+document.getElementById("nama").value;
+
+if(nama==""){
+alert("Masukkan nama siswa");
+return;
+}
+
+document.getElementById("namaSiswa").innerHTML=nama;
+
+document.getElementById("hasil").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
 
