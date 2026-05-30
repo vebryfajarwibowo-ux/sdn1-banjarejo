@@ -27,7 +27,22 @@ border-radius:25px;
 text-align:center;
 backdrop-filter:blur(10px);
 }
+.logo{
+width:180px;
+display:block;
+margin:0 auto 20px auto;
+animation:logoFloat 4s ease-in-out infinite;
+filter:drop-shadow(0 0 20px rgba(255,215,0,.5));
+}
 
+@keyframes logoFloat{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-10px);
+}
+}
 input{
 width:100%;
 padding:15px;
@@ -68,7 +83,7 @@ color:#fbbf24;
 <body>
 
 <div class="card">
-
+<img src="logo.png" class="logo">
 <h1>SDN 1 BANJAREJO</h1>
 
 <p>Pengumuman Kelulusan 2025/2026</p>
