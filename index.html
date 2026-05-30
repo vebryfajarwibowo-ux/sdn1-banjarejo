@@ -147,11 +147,7 @@ let nama = document.getElementById("nama")
 .toUpperCase()
 .trim();
 
-if(
-nama !== "AHMAD MUZAKI" &&
-nama !== "JUWITA NUR FITRIYAH" &&
-nama !== "YASMIN JIHAN RAMADHANI"
-){
+if(!siswa.includes(nama)){
 alert("Nama tidak ditemukan");
 return;
 }
