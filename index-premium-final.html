@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelulusan SDN 1 Banjarejo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;min-height:100vh;background:linear-gradient(135deg,#071225,#1e3a8a);color:#fff;display:flex;justify-content:center;align-items:center;padding:20px;overflow-x:hidden}
+.card{width:100%;max-width:850px;background:rgba(255,255,255,.09);padding:30px;border-radius:28px;text-align:center;backdrop-filter:blur(12px);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.logo{width:165px;height:auto;display:block;margin:0 auto 18px;animation:logoFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 22px rgba(255,215,0,.55))}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+h1{font-size:40px;margin:10px 0;letter-spacing:1px}
+.sub{font-size:20px;margin-bottom:22px}
+input{width:100%;padding:17px;border:none;border-radius:14px;font-size:18px;margin-top:10px;text-align:center}
+button{width:100%;padding:17px;border:none;border-radius:14px;margin-top:15px;background:linear-gradient(135deg,#fbbf24,#f59e0b);font-weight:bold;font-size:18px;cursor:pointer;box-shadow:0 8px 20px rgba(251,191,36,.35)}
+button:hover{transform:scale(1.01)}
+#amplopBox{display:none;margin-top:30px}
+.envelope{position:relative;width:280px;height:180px;margin:25px auto;cursor:pointer;animation:goyang 1.8s infinite}
+@keyframes goyang{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.back{position:absolute;inset:0;background:linear-gradient(135deg,#fcd34d,#f59e0b);border-radius:10px;box-shadow:0 15px 35px rgba(0,0,0,.35)}
+.paper{position:absolute;left:20px;bottom:15px;width:240px;height:135px;background:#fffef7;color:#111;border-radius:10px;display:flex;justify-content:center;align-items:center;font-weight:bold;transition:1.2s;z-index:2}
+.flap{position:absolute;top:0;width:100%;height:90px;background:#eab308;clip-path:polygon(0 100%,50% 0,100% 100%);transform-origin:top;transition:1s;z-index:4}
+.front{position:absolute;bottom:0;width:100%;height:110px;background:#f59e0b;clip-path:polygon(0 0,50% 60%,100% 0,100% 100%,0 100%);z-index:3}
+.open .flap{transform:rotateX(-170deg)}
+.open .paper{transform:translateY(-150px)}
+#hasil{display:none;margin-top:25px;background:#fffef7;color:#111827;padding:30px;border-radius:25px;box-shadow:0 20px 50px rgba(0,0,0,.35);animation:muncul .9s ease}
+@keyframes muncul{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.sertifikat-logo{width:85px;margin-bottom:10px}.judul-surat{font-size:22px;font-weight:bold;color:#1e3a8a}.nama{font-size:34px;font-weight:900;margin:25px 0 10px}
+.lulus{font-size:78px;font-weight:900;color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,.8);margin:10px 0}
+.pesan{font-size:17px;line-height:1.7;margin-top:15px}.ttd{text-align:right;margin-top:45px;font-size:16px}.cetak{margin-top:25px;background:linear-gradient(135deg,#1e40af,#2563eb);color:white}
+.confetti{position:fixed;top:-20px;width:10px;height:10px;animation:jatuh linear forwards;z-index:9999}
+@keyframes jatuh{to{transform:translateY(110vh) rotate(720deg)}}
+@media(max-width:600px){h1{font-size:29px}.sub{font-size:16px}.logo{width:125px}.lulus{font-size:52px}.nama{font-size:24px}.card{padding:22px}}
+@media print{body{background:white;display:block;padding:0}.card{box-shadow:none;background:white;color:black;max-width:100%;padding:0}.logo,.sub,input,button,#amplopBox{display:none!important}#hasil{display:block!important;box-shadow:none;margin:0;border-radius:0}}
+</style>
+</head>
+<body>
+<div class="card">
+  <img src="logo.png" class="logo" alt="Logo SDN 1 Banjarejo">
+  <h1>SDN 1 BANJAREJO</h1>
+  <div class="sub">Pengumuman Kelulusan Tahun Pelajaran 2025/2026</div>
+  <input id="nama" placeholder="Masukkan Nama Siswa">
+  <button onclick="cek()">LIHAT PENGUMUMAN</button>
+  <div id="amplopBox">
+    <p style="margin-top:25px;font-weight:bold;">Klik amplop untuk membuka surat kelulusan</p>
+    <div class="envelope" id="envelope" onclick="bukaAmplop()">
+      <div class="back"></div><div class="paper">SURAT KELULUSAN</div><div class="flap"></div><div class="front"></div>
+    </div>
+  </div>
+  <div id="hasil">
+    <img src="logo.png" class="sertifikat-logo" alt="Logo SDN 1 Banjarejo">
+    <div class="judul-surat">SURAT KETERANGAN KELULUSAN</div>
+    <p>Dengan bangga diumumkan bahwa:</p>
+    <div class="nama" id="namaSiswa"></div>
+    <div class="lulus">LULUS</div>
+    <div class="pesan">Dari SDN 1 Banjarejo<br>Tahun Pelajaran 2025/2026<br><br>Selamat atas keberhasilan Anda.<br>Teruslah belajar, berkarya, dan raih cita-cita setinggi-tingginya.</div>
+    <div class="ttd">Gabus, 2 Juni 2026<br>Kepala Sekolah<br><br><br><b>Suyatmi, S.Pd</b><br>NIP. 197108272000032002</div>
+    <button class="cetak" onclick="window.print()">CETAK / SIMPAN SERTIFIKAT</button>
+  </div>
+</div>
+<script>
+const siswa = ["AHMAD CHOIRULBALYA","AHMAD MUZAKI","AHMAD RIF'AN RASYID","ALBY LUTHFY FACHRY","DESTHANIA MIKAILA IKHSANDRA","DHESYA OKTA BIDARI","FAIREL ATHARIZZ CALIEF FAWWAZI","ILHAM ARKHAN MAULANA","JUWITA NUR FITRIYAH","LAILATUL BADRIYAH","MUHAMMAD ANIS RIFAN","NAILA NUR ROHMAH","NIKEN ALIFIA GUNAWAN","RAZZA SYAHIID VICKY APRILIO","SEKAR ARUM DEWI FORTUNA","YASMIN JIHAN RAMADHANI","ZUMROTUL AL MUFIDA"];
+let namaAktif = "";
+function cek(){
+  let nama = document.getElementById("nama").value.toUpperCase().trim();
+  if(nama === ""){alert("Masukkan nama siswa");return;}
+  if(!siswa.includes(nama)){alert("Nama tidak ditemukan");return;}
+  namaAktif = nama;
+  document.getElementById("hasil").style.display = "none";
+  document.getElementById("amplopBox").style.display = "block";
+  document.getElementById("envelope").classList.remove("open");
+}
+function bukaAmplop(){
+  document.getElementById("envelope").classList.add("open");
+  setTimeout(function(){
+    document.getElementById("namaSiswa").innerHTML = namaAktif;
+    document.getElementById("hasil").style.display = "block";
+    konfeti();
+  },1200);
+}
+function konfeti(){
+  for(let i=0;i<90;i++){
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = ["#fbbf24","#ffffff","#60a5fa","#22c55e"][Math.floor(Math.random()*4)];
+    c.style.animationDuration = (Math.random()*3+2) + "s";
+    document.body.appendChild(c);
+    setTimeout(function(){c.remove();},5000);
+  }
+}
+</script>
+</body>
+</html>
