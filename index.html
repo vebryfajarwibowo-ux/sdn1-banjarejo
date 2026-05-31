@@ -55,11 +55,25 @@ button:disabled{background:#9ca3af;cursor:not-allowed}
 .confetti{position:fixed;top:-18px;width:9px;height:9px;z-index:99;animation:fall linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 @media(max-width:720px){.top{padding:18px 10px 48px}.content{margin-top:48px}.search{display:block}input{width:100%;text-align:center;font-size:17px}button{width:100%;padding:15px;font-size:18px}.countdown{grid-template-columns:repeat(2,1fr)}.result-card{grid-template-columns:1fr;padding:16px;gap:14px}.photo{width:135px;height:176px;margin:auto}.info{text-align:center}.row{grid-template-columns:1fr;font-size:15.5px;text-align:center;margin:7px 0}.row span:nth-child(2){display:none}.message{font-size:15.5px;padding:13px 15px;text-align:left}.icon{font-size:34px}.ttd-img{width:105px}.signature{font-size:15.5px}.ks{font-size:18px}.nip{font-size:15.5px}.envelope3d{width:220px;height:145px}}
 @media print{@page{size:A4 portrait;margin:7mm}body{background:white}.top,.instruction,.search,#loading,#envelopeBox,.timer,.print-btn,.footer-curve{display:none!important}.content{width:100%;margin:0 auto}.result-card{box-shadow:none;break-inside:avoid;grid-template-columns:155px 1fr;padding:14px}.photo{width:155px;height:200px}.message{box-shadow:none;padding:10px 14px}.signature{margin-top:10px}.ttd-img{width:95px}.nama{font-size:24px}#result{display:block!important}}
+
+.admin-badge{
+  display:none;
+  margin:10px auto 0;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(34,197,94,.18);
+  color:#bbf7d0;
+  border:1px solid rgba(187,247,208,.55);
+  font-weight:900;
+  width:max-content;
+  max-width:90%;
+}
+
 </style>
 </head>
 <body>
 <div class="page">
-<section class="top"><div class="logo-stage"><img src="logo.png" class="logo" alt="Logo"></div><h1>PENGUMUMAN KELULUSAN</h1><div class="school">SD NEGERI 1 BANJAREJO</div><div class="year">TAHUN PELAJARAN 2025/2026</div></section>
+<section class="top"><div class="logo-stage" onclick="adminTap()"><img src="logo.png" class="logo" alt="Logo" title="Admin"></div><h1>PENGUMUMAN KELULUSAN</h1><div class="school">SD NEGERI 1 BANJAREJO</div><div class="year">TAHUN PELAJARAN 2025/2026</div><div id="adminBadge" class="admin-badge">MODE ADMIN AKTIF</div></section>
 <main class="content">
 <div class="timer" id="timer"><div class="timer-title">Pengumuman dibuka pada 2 Juni 2026 pukul 10:00 WIB</div><div class="countdown"><div><span id="d">0</span>Hari</div><div><span id="h">0</span>Jam</div><div><span id="m">0</span>Menit</div><div><span id="s">0</span>Detik</div></div></div>
 <div class="instruction">Masukkan nama lengkap siswa untuk melihat hasil kelulusan</div>
@@ -111,9 +125,39 @@ const nisn={
   "YASMIN JIHAN RAMADHANI": "0133847812",
   "ZUMROTUL AL MUFIDA": "0144451848"
 };
-const unlockTime=new Date("2026-07-02T10:00:00+07:00").getTime();
+const unlockTime=new Date("2026-06-02T10:00:00+07:00").getTime();
 let namaAktif="", locked=true;
-function updateTimer(){const now=Date.now();let diff=unlockTime-now;const btn=document.getElementById("btnCari");if(diff<=0){locked=false;document.getElementById("timer").style.display="none";btn.disabled=false;btn.innerHTML="🔍 Cari";return}locked=true;btn.disabled=true;btn.innerHTML="Belum Dibuka";let d=Math.floor(diff/86400000);diff%=86400000;let h=Math.floor(diff/3600000);diff%=3600000;let m=Math.floor(diff/60000);let s=Math.floor((diff%60000)/1000);document.getElementById("d").innerHTML=d;document.getElementById("h").innerHTML=h;document.getElementById("m").innerHTML=m;document.getElementById("s").innerHTML=s}
+
+let adminMode=false;
+let adminTapCount=0;
+let adminTapTimer=null;
+const adminPassword="SDN1BANJAREJO2026";
+
+function adminTap(){
+  adminTapCount++;
+  clearTimeout(adminTapTimer);
+  adminTapTimer=setTimeout(()=>{adminTapCount=0},2500);
+
+  if(adminTapCount>=5){
+    adminTapCount=0;
+    const pass=prompt("Masukkan Password Admin:");
+    if(pass===adminPassword){
+      adminMode=true;
+      locked=false;
+      const timer=document.getElementById("timer");
+      const btn=document.getElementById("btnCari");
+      const badge=document.getElementById("adminBadge");
+      if(timer) timer.style.display="none";
+      if(btn){btn.disabled=false;btn.innerHTML="🔍 Cari";}
+      if(badge) badge.style.display="block";
+      alert("Mode Admin Aktif. Hasil bisa dibuka untuk pengecekan.");
+    }else if(pass!==null){
+      alert("Password admin salah.");
+    }
+  }
+}
+
+function updateTimer(){if(typeof adminMode!=='undefined' && adminMode){return;}const now=Date.now();let diff=unlockTime-now;const btn=document.getElementById("btnCari");if(diff<=0){locked=false;document.getElementById("timer").style.display="none";btn.disabled=false;btn.innerHTML="🔍 Cari";return}locked=true;btn.disabled=true;btn.innerHTML="Belum Dibuka";let d=Math.floor(diff/86400000);diff%=86400000;let h=Math.floor(diff/3600000);diff%=3600000;let m=Math.floor(diff/60000);let s=Math.floor((diff%60000)/1000);document.getElementById("d").innerHTML=d;document.getElementById("h").innerHTML=h;document.getElementById("m").innerHTML=m;document.getElementById("s").innerHTML=s}
 setInterval(updateTimer,1000);updateTimer();
 function cek(){if(locked){alert("Pengumuman dibuka 2 Juni 2026 pukul 10:00 WIB");return}const nama=document.getElementById("nama").value.toUpperCase().trim();if(nama===""){alert("Masukkan nama siswa");return}if(!siswa[nama]){alert("Nama tidak ditemukan");return}namaAktif=nama;document.getElementById("result").style.display="none";document.getElementById("envelopeBox").style.display="none";document.getElementById("loading").style.display="block";const bar=document.getElementById("bar");bar.style.transition="none";bar.style.width="0";setTimeout(()=>{bar.style.transition="1s";bar.style.width="100%"},40);setTimeout(()=>{document.getElementById("loading").style.display="none";document.getElementById("envelopeBox").style.display="block";document.getElementById("env").classList.remove("open");document.getElementById("envelopeBox").scrollIntoView({behavior:"smooth",block:"center"})},1050)}
 function bukaAmplop(){const env=document.getElementById("env");env.classList.add("open");setTimeout(()=>{const nama=namaAktif;document.getElementById("namaSiswa").innerHTML=nama;document.getElementById("fotoSiswa").src=siswa[nama];document.getElementById("nisn").innerHTML=nisn[nama]||"-";document.getElementById("result").style.display="block";konfeti();document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"})},950)}
